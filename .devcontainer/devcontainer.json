@@ -12,7 +12,7 @@
 				"laravel.vscode-laravel",
 				"mikestead.dotenv",
 				"amiralizadeh9480.laravel-extra-intellisense",
-				// "ryannaddy.laravel-artisan",
+				"bmewburn.vscode-intelephense-client"
 				// "onecentlin.laravel5-snippets",
 				// "onecentlin.laravel-blade"
 			],
