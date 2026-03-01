@@ -278,4 +278,16 @@ A spatial lookup table used to translate UK postcodes into coordinates for radiu
 | `created_at` | `timestamp` | YES | | NULL | |
 | `updated_at` | `timestamp` | YES | | NULL | |
 
-### Database Schema
+### Architecture 
+
+The architecture is pretty standard for a laravel API. I used a service class to group the store logic into a class for reuse and testability, created a Resource class to customise the response the API returned and a trait to give a conistent response structure.
+
+The postcode importing command uses
+
+- LazyCollection to limit the memory usage incase of large import files.
+- Chunking to further limit the memory usage
+- Queued batches to allow for multiple processes to process the import
+- The job_batch record to allow tracking of individual jobs 
+- Service class to make that logic testable
+
+The job uses bulk upsets to efficiently update / create the data.
