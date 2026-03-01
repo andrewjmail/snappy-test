@@ -160,7 +160,7 @@ Rate Limit: 60 requests / minute
 
 ### Neaby Stores
 
-> URL: /api/v1/nearby
+> URL: /api/v1/nearbyA
 
 Method: Get
 
@@ -170,8 +170,8 @@ Rate Limit: 60 requests / minute
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| postcode | string | Yes | Valid uk postcode
-| radius | int | No | Between 0 and 100 | Radius to search for Stores in |
+| postcode | string | Yes | Valid uk postcode |
+| radius | int | No | Between 0 and 100 |
 
 #### Success Response (210 Created)
 
@@ -200,6 +200,7 @@ Rate Limit: 60 requests / minute
     }
   ]
 }
+```
 
 ### Neaby Stores
 
@@ -213,8 +214,8 @@ Rate Limit: 60 requests / minute
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| postcode | string | Yes | Valid uk postcode
-| radius | int | No | Between 0 and 100 | Radius to search for Stores in |
+| postcode | string | Yes | Valid uk postcode |
+| radius | int | No | Between 0 and 100 |
 
 #### Success Response (210 Created)
 
