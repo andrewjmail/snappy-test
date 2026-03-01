@@ -19,7 +19,7 @@ Inside the devcontainer you will be able to use php artisan, composer, npm etc w
 
 ## Postcode Importing Command
 
-The Api endpoints require Postcode data for the spatial calcualations. There is a sample csv included in the repo which can be imported with the following steps.
+The Api endpoints require Postcode data for the spatial calculations. There is a sample csv included in the repo which can be imported with the following steps.
 
 > ./vendor/bin/sail artisan import:postcodes data/postcodes_sample.csv
 
@@ -56,7 +56,7 @@ To enforce PSR12 you can run Laravel Pint using
 
 Run PHPstan
 
-> ./vendor/bin/sail bin phpstan analyse
+> ./vendor/bin/sail bin/phpstan analyse
 
 # Store API Documentation (v1)
 
@@ -81,6 +81,10 @@ This document outlines the available API endpoints for the Store Management and 
     "message": "Descriptive success message",
     "data": [] | {}
 }
+
+```
+
+```json
 
 {
     "status": "error",
@@ -111,7 +115,7 @@ Rate Limit: 60 requests / minute
 | latitude | numeric | Yes  | -90 to 90 | GPS Latitude. |
 | longitude | numeric | Yes | -180 to 180 | GPS Longitude. |
 
-#### Success Response (210 Created)
+#### Success Response (201 Created)
 
 ```json
 
@@ -158,22 +162,22 @@ Rate Limit: 60 requests / minute
 
 ```
 
-### Neaby Stores
+### Nearby Stores
 
-> URL: /api/v1/nearbyA
+> URL: /api/v1/nearby
 
 Method: Get
 
 Rate Limit: 60 requests / minute
 
-#### Request Body (application/json)
+#### Query Parameters (application/json)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | postcode | string | Yes | Valid uk postcode |
 | radius | int | No | Between 0 and 100 |
 
-#### Success Response (210 Created)
+#### Success Response (200 OK)
 
 ```json
 {
@@ -202,7 +206,7 @@ Rate Limit: 60 requests / minute
 }
 ```
 
-### Neaby Stores
+### Can Deliver
 
 > URL: /api/v1/can-deliver
 
@@ -210,14 +214,14 @@ Method: Get
 
 Rate Limit: 60 requests / minute
 
-#### Request Body (application/json)
+#### Query Parameters (application/json)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | postcode | string | Yes | Valid uk postcode |
 | radius | int | No | Between 0 and 100 |
 
-#### Success Response (210 Created)
+#### Success Response (200 OK)
 
 ```json
 {
@@ -280,7 +284,7 @@ A spatial lookup table used to translate UK postcodes into coordinates for radiu
 
 ### Architecture 
 
-The architecture is pretty standard for a laravel API. I used a service class to group the store logic into a class for reuse and testability, created a Resource class to customise the response the API returned and a trait to give a conistent response structure.
+The architecture is pretty standard for a laravel API. I used a service class to group the store logic into a class for reuse and testability, created a Resource class to customise the response the API returned and a trait to give a consistent response structure.
 
 The postcode importing command uses
 
@@ -290,4 +294,4 @@ The postcode importing command uses
 - The job_batch record to allow tracking of individual jobs 
 - Service class to make that logic testable
 
-The job uses bulk upsets to efficiently update / create the data.
+The job uses bulk upserts to efficiently update / create the data.
