@@ -41,4 +41,35 @@ class StoreService
             ->orderByDistanceTo('location', $postcode->location) // Sorts by nearest
             ->get();
     }
+
+    public function findDeliverableStores(string $postcode): Collection
+    {
+        $maxTimeLimit = config('delivery.max_allowed_minutes'); // Better as a value on the store model
+
+        $stores = $this->findInRadiusOfPostcode($postcode, 15.0);
+
+        return $stores->filter(function ($store) use ($maxTimeLimit) {
+            $distanceKm = (float) $store->distance / 1000;
+            $maxRadiusKm = (float) $store->delivery_radius_km;
+
+            // 1. Calculate the estimate first to use it for filtering
+            $store->estimated_delivery_minutes = $this->calculateEstimate($store->distance);
+
+            // 2. Filter by BOTH physical radius AND time limit
+            return $distanceKm <= $maxRadiusKm 
+                && $store->estimated_delivery_minutes <= $maxTimeLimit;
+                
+        });
+    }
+
+    public function calculateEstimate(float $distanceMeters): int
+    {
+        $distanceKm = $distanceMeters / 1000;
+        $basedTime = config('delivery.estimates.base'); 
+        $minutesPerKm = config('delivery.estimates.minutes_per_km');
+
+        // Add some calculations based on active delivery staff, order volume, traffic, geography etc
+        
+        return (int) ($basedTime + ($distanceKm * $minutesPerKm));
+    }
 }

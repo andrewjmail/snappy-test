@@ -28,6 +28,9 @@ class StoreResource extends JsonResource
                 'distance' => $this->when(isset($this->distance), function () {
                     return round($this->distance / 1000, 2).' km';
                 }),
+                'estimated_delivery_minutes' => $this->when(isset($this->estimated_delivery_minutes), function() {
+                    return $this->estimated_delivery_minutes;
+                }),
             ],
         ];
     }

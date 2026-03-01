@@ -34,6 +34,12 @@ Once the command has completed you can process the jobs using
 
 > ./vendor/bin/sail artisan queue:work
 
+## Database Seeding
+
+There are Postcode and Store seeders
+
+> ./vendor/bin/sail artisan db:seed
+
 ## Tests
 
 Tests can be run using 
