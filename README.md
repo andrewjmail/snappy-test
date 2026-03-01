@@ -244,3 +244,38 @@ Rate Limit: 60 requests / minute
     }
   ]
 }
+
+```
+
+### Database Schema
+
+I haven't included any diagrams as it is very simple 
+
+### 1. Stores Table
+Stores the physical shop locations, branding, and their specific delivery capabilities.
+
+| Field | Type | Nullable | Key | Default | Extra |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `id` | `bigint unsigned` | NO | PRI | NULL | auto_increment |
+| `uuid` | `varchar(255)` | NO | UNI | NULL | |
+| `name` | `varchar(50)` | NO | | NULL | |
+| `address` | `varchar(255)` | YES | | NULL | |
+| `brand` | `varchar(50)` | YES | MUL | NULL | Indexed Enum |
+| `delivery_radius_km` | `decimal(5,2)` | NO | | `5.00` | |
+| `location` | `point` | NO | MUL | NULL | **Spatial Index** |
+| `active_at` | `datetime` | YES | | NULL | |
+| `created_at` | `timestamp` | YES | | NULL | |
+| `updated_at` | `timestamp` | YES | | NULL | |
+
+### 2. Postcodes Table
+A spatial lookup table used to translate UK postcodes into coordinates for radius searches.
+
+| Field | Type | Nullable | Key | Default | Extra |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `id` | `bigint unsigned` | NO | PRI | NULL | auto_increment |
+| `postcode` | `varchar(10)` | NO | UNI | NULL | Unique Index |
+| `location` | `point` | NO | MUL | NULL | **Spatial Index** |
+| `created_at` | `timestamp` | YES | | NULL | |
+| `updated_at` | `timestamp` | YES | | NULL | |
+
+### Database Schema
