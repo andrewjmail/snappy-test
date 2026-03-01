@@ -25,7 +25,8 @@ class StoreStoreTest extends TestCase
             ->assertJson([
                 'status' => 'success',
                 'message' => 'Store created successfully.',
-            ]);
+            ])
+            ->assertJsonPath('data.name', 'Store');
 
         $this->assertDatabaseHas('stores', [
             'name' => 'Store',
@@ -46,7 +47,19 @@ class StoreStoreTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['name', 'delivery_radius_km', 'brand', 'latitude', 'longitude']);
+            ->assertJson([
+                'status' => 'error',
+                'message' => 'Validation failed',
+            ])
+            ->assertJsonStructure([
+                'errors' => [
+                    'name',
+                    'brand',
+                    'delivery_radius_km',
+                    'latitude',
+                    'longitude',
+                ],
+            ]);
     }
 
     public function test_duplicate_store_name_and_location()
