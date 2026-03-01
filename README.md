@@ -44,13 +44,13 @@ Tests can be run using
 
 To enforce PSR12 you can run Laravel Pint using
 
-> ./vendor/bin/sail pint
+> ./vendor/bin/sail pint 
 
-## Pint linting
+## Static Analysis
 
-To enforce PSR12 you can run Laravel Pint using
+Run PHPstan
 
-> ./vendor/bin/sail pint
+> ./vendor/bin/sail bin phpstan analyse
 
 ## License
 
