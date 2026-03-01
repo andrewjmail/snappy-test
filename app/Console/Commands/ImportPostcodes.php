@@ -75,7 +75,7 @@ class ImportPostcodes extends Command
     {
         return Bus::batch([])
             ->name('Postcode Import: '.$filePath)
-            ->catch(fn ($batch, $e) => Log::error('Batch failed: '.$e->getMessage())) 
+            ->catch(fn ($batch, $e) => Log::error('Batch failed: '.$e->getMessage()))
             ->dispatch();
     }
 
