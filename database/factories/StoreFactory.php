@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\StoreBrand;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use TarfinLabs\LaravelSpatial\Types\Point;
 
@@ -15,6 +16,7 @@ class StoreFactory extends Factory
         return [
             'name' => $this->faker->company(),
             'address' => $this->faker->address(),
+            'brand' => $this->faker->randomElement(StoreBrand::cases()),
             'delivery_radius_km' => $this->faker->randomFloat(1, 1, 10),
             'location' => new Point(
                 $this->faker->latitude(51.3, 51.7),

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StoreBrand;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,7 @@ class Store extends Model
     protected $casts = [
         'active_at' => 'datetime',
         'location' => LocationCast::class,
+        'brand' => StoreBrand::class,
     ];
 
     public function scopeActive($query)

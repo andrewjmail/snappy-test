@@ -14,6 +14,7 @@ class StoreService
         return Store::create([
             'name' => $data['name'],
             'address' => $data['address'] ?? null,
+            'brand' => $data['brand'] ?? null,
             'delivery_radius_km' => $data['delivery_radius_km'],
             'location' => $location,
             'active_at' => null, // Store isn't open at creation

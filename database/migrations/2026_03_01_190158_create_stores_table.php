@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->string('uuid')->unique();
-            $table->string('name');
+            $table->string('name', 50);
             $table->string('address')->nullable();
 
+            $table->string('brand', 50)->nullable()->index();
             $table->decimal('delivery_radius_km', 5, 2)->default(5.00);
 
             $table->geography('location', subtype: 'point', srid: 4326);
