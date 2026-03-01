@@ -16,7 +16,7 @@ class ImportPostcodes extends Command
      */
     protected $signature = 'import:postcodes 
                             {file : Path to the CSV file} 
-                            {--postcode-col : Optional name of the postcode column} 
+                            {--postcode-col= : Optional name of the postcode column} 
                             {--lat-col= : Optional name of the latitude column} 
                             {--lon-col= : Optional name of the longitude column}';
 
