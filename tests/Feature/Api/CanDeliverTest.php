@@ -20,7 +20,7 @@ class CanDeliverTest extends TestCase
 
         $this->postcode = Postcode::create([
             'postcode' => 'AB123CD',
-            'location' => new Point(50.0, -2.0, 4326)
+            'location' => new Point(50.0, -2.0, 4326),
         ]);
     }
 
@@ -35,7 +35,7 @@ class CanDeliverTest extends TestCase
 
         // 2. Act - Reference the property's postcode string
         $response = $this->getJson(route('api.v1.stores.can-deliver', [
-            'postcode' => $this->postcode->postcode
+            'postcode' => $this->postcode->postcode,
         ]));
 
         // 3. Assert
@@ -50,9 +50,9 @@ class CanDeliverTest extends TestCase
                             'radius_km',
                             'distance',
                             'estimated_delivery_minutes',
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ]);
 
         $this->assertIsInt($response->json('data.0.delivery.estimated_delivery_minutes'));

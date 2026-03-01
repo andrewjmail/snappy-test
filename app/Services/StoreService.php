@@ -56,20 +56,20 @@ class StoreService
             $store->estimated_delivery_minutes = $this->calculateEstimate($store->distance);
 
             // 2. Filter by BOTH physical radius AND time limit
-            return $distanceKm <= $maxRadiusKm 
+            return $distanceKm <= $maxRadiusKm
                 && $store->estimated_delivery_minutes <= $maxTimeLimit;
-                
+
         });
     }
 
     public function calculateEstimate(float $distanceMeters): int
     {
         $distanceKm = $distanceMeters / 1000;
-        $basedTime = config('delivery.estimates.base'); 
+        $basedTime = config('delivery.estimates.base');
         $minutesPerKm = config('delivery.estimates.minutes_per_km');
 
         // Add some calculations based on active delivery staff, order volume, traffic, geography etc
-        
+
         return (int) ($basedTime + ($distanceKm * $minutesPerKm));
     }
 }

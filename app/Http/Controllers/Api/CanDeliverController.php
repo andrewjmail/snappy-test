@@ -26,7 +26,7 @@ class CanDeliverController extends Controller
 
             return $this->success(
                 StoreResource::collection($stores),
-                "{$stores->count()} stores can deliver to your postcode.", 
+                "{$stores->count()} stores can deliver to your postcode.",
             );
         } catch (\Exception $e) {
             return $this->error('There was a problem finding stores that can deliver to your postcode.', 500);

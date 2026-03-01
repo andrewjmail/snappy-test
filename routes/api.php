@@ -19,7 +19,7 @@ Route::prefix('v1')->name('api.v1.')->group(function () {
 
         Route::get('/nearby', NearbyStoreController::class)
             ->name('nearby');
-        
+
         Route::get('/can-deliver', CanDeliverController::class)
             ->name('can-deliver');
     });

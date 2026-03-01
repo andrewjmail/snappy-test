@@ -58,6 +58,188 @@ Run PHPstan
 
 > ./vendor/bin/sail bin phpstan analyse
 
-## License
+# Store API Documentation (v1)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This document outlines the available API endpoints for the Store Management and Spatial Search system. All endpoints are versioned under `v1` and return consistent JSON structures.
+
+---
+
+## Global Configuration
+
+- **Base URL:** `{host}/api/v1`
+- **Rate Limiting:** 60 requests per minute per IP.
+- **Content-Type:** `application/json`
+
+---
+
+## Response Structures
+
+### Success Response
+```json
+{
+    "status": "success",
+    "message": "Descriptive success message",
+    "data": [] | {}
+}
+
+{
+    "status": "error",
+    "message": "Validation failed",
+    "errors": {
+        "field_name": ["Specific error message"]
+    }
+}
+
+```
+
+### Create Store
+
+> URL: /api/v1/stores
+
+Method: POST
+
+Rate Limit: 60 requests / minute
+
+#### Request Body (application/json)
+
+| Field | Type | Required | Constraints | Description |
+|---|---|---|---|---|
+| name | string | Yes | max: 255 | Unique per address. |
+| address | string | No | Max: 255 | Physical street address. |
+| brand | string | No | Enum | StoreBrand (e.g tesco). |
+| delivery_radius_km | numeric | Yes | 0.1 to 100 | Radius the store services |
+| latitude | numeric | Yes  | -90 to 90 | GPS Latitude. |
+| longitude | numeric | Yes | -180 to 180 | GPS Longitude. |
+
+#### Success Response (210 Created)
+
+```json
+
+{
+    "status": "success",
+    "message": "Store created successfully.",
+    "data": {
+        "uuid": "9b8f2a1d-7c3e-4b5a-a123-456789abcdef",
+        "name": "Central Coffee",
+        "brand": {
+            "id": "independent",
+            "name": "Independent Store"
+        },
+        "address": "123 High St",
+        "is_active": true,
+        "location": {
+            "lat": 51.5074,
+            "lng": -0.1278
+        },
+        "created_at": "1 second ago",
+        "delivery": {
+            "radius_km": 5.0
+        }
+    }
+}
+```
+
+#### Validation Error
+
+```json
+
+{
+    "status": "error",
+    "message": "Validation failed",
+    "errors": {
+        "name": [
+            "A store with the same name and address already exists."
+        ],
+        "latitude": [
+            "The latitude field is required."
+        ]
+    }
+}
+
+```
+
+### Neaby Stores
+
+> URL: /api/v1/nearby
+
+Method: Get
+
+Rate Limit: 60 requests / minute
+
+#### Request Body (application/json)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| postcode | string | Yes | Valid uk postcode
+| radius | int | No | Between 0 and 100 | Radius to search for Stores in |
+
+#### Success Response (210 Created)
+
+```json
+{
+  "data": [
+    {
+      "uuid": "8f2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+      "name": "Central Provisions",
+      "brand": {
+        "id": "tesco",
+        "name": "Tesco"
+      },
+      "address": "123 High Street, London",
+      "is_active": true,
+      "location": {
+        "lat": 51.5074,
+        "lng": -0.1278
+      },
+      "created_at": "2 days ago",
+      "delivery": {
+        "radius_km": 5.5,
+        "distance": "1.24 km",
+        "estimated_delivery_minutes": 25
+      }
+    }
+  ]
+}
+
+### Neaby Stores
+
+> URL: /api/v1/can-deliver
+
+Method: Get
+
+Rate Limit: 60 requests / minute
+
+#### Request Body (application/json)
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| postcode | string | Yes | Valid uk postcode
+| radius | int | No | Between 0 and 100 | Radius to search for Stores in |
+
+#### Success Response (210 Created)
+
+```json
+{
+  "data": [
+    {
+      "uuid": "8f2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
+      "name": "Central Provisions",
+      "brand": {
+        "id": "local_harvest",
+        "name": "Local Harvest Co."
+      },
+      "address": "123 High Street, London",
+      "is_active": true,
+      "location": {
+        "lat": 51.5074,
+        "lng": -0.1278
+      },
+      "created_at": "2 days ago",
+      "delivery": {
+        "radius_km": 5.5,
+        "distance": "1.24 km",
+        "estimated_delivery_minutes": 25
+      }
+    }
+  ]
+}

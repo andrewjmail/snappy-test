@@ -12,7 +12,7 @@ return [
     */
     'estimates' => [
         'base' => 15,
-        'minutes_per_km' => 5, 
+        'minutes_per_km' => 5,
     ],
     'max_allowed_minutes' => 60,
 ];
