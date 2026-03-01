@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStoreRequest;
+use App\Http\Resources\StoreResource;
 use App\Services\StoreService;
 use App\Traits\HandlesApiResponses;
 use Illuminate\Http\JsonResponse;
@@ -21,9 +22,8 @@ class StoreController extends Controller
 
         try {
             $store = $this->storeService->createStore($request->validated());
-
             return $this->success(
-                $store,
+                new StoreResource($store),
                 'Store created successfully.',
                 201
             );

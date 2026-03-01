@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\StoreBrand;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,8 +29,14 @@ class Store extends Model
 
     public function scopeActive($query)
     {
-
         return $query->whereNotNull('active_at')
             ->where('active_at', '<=', now());
+    }
+
+    protected function isActive(): Attribute
+    {
+        return Attribute::get(function (): bool {
+            return $this->active_at && $this->active_at->isPast() ? true : false;
+        });
     }
 }
