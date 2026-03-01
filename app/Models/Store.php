@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use TarfinLabs\LaravelSpatial\Casts\LocationCast;
+use TarfinLabs\LaravelSpatial\Traits\HasSpatial;
 
 class Store extends Model
 {
     /** @use HasFactory<\Database\Factories\StoreFactory> */
-    use HasFactory, HasUuids;
+    use HasFactory, HasSpatial, HasUuids;
 
     protected $guarded = [];
 

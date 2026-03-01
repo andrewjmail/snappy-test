@@ -23,6 +23,12 @@ class StoreResource extends JsonResource
                 'lng' => $this->location->getLng(),
             ],
             'created_at' => $this->created_at->diffForHumans(),
+            'delivery' => [
+                'radius_km' => (float) $this->delivery_radius_km,
+                'distance' => $this->when(isset($this->distance), function () {
+                    return round($this->distance / 1000, 2).' km';
+                }),
+            ],
         ];
     }
 }

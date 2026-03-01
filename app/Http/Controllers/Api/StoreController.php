@@ -22,6 +22,7 @@ class StoreController extends Controller
 
         try {
             $store = $this->storeService->createStore($request->validated());
+
             return $this->success(
                 new StoreResource($store),
                 'Store created successfully.',
